@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         btn_proximo = (Button) findViewById(R.id.btnProximo);
         btn_novo = (Button) findViewById(R.id.btnNovo);
 
-        cadastroEventos();
+        cadastrarEventos();
 
         //getInstance() requisita a data e o horário que estão definidos no aplicativo.
         dataApp = Calendar.getInstance();
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Implementa todos os eventos dos botões
-    private void cadastroEventos() {
+    private void cadastrarEventos() {
         btn_anterior.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
