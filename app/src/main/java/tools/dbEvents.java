@@ -6,11 +6,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import modelo.Event;
+
 public class dbEvents extends SQLiteOpenHelper {
 
     private Context context;
 
-    public dbEvents (Context context) {
+    public dbEvents(Context context) {
         super(context, "evento", null, 1);
         this.context = context;
     }
@@ -22,8 +24,8 @@ public class dbEvents extends SQLiteOpenHelper {
         db.execSQL(create);
     }
 
-    public void insert() {
-        try(SQLiteDatabase db = this.getWritableDatabase();) {
+    public void insert(Event novoEvento) {
+        try (SQLiteDatabase db = this.getWritableDatabase();) {
             /*
             String sql = "INSERT into evento(nome, valor) VALUES ('teste', 89)";
             db.execSQL(sql);
@@ -31,8 +33,12 @@ public class dbEvents extends SQLiteOpenHelper {
 
             ContentValues valores = new ContentValues();
 
-            valores.put("nome", "teste");
-            valores.put("valor", -100);
+            valores.put("nome", novoEvento.getNome());
+            valores.put("valor", novoEvento.getValor());
+            valores.put("imagem", novoEvento.getCaminhoFoto());
+            valores.put("dataOcorreu", novoEvento.getDataOcorreu().getTime());
+            valores.put("dataCadastro", novoEvento.getDataCadastro().getTime());
+            valores.put("validadeData", novoEvento.getDataLimite().getTime());
 
             db.insert("evento", null, valores);
         } catch (SQLiteException ex) {

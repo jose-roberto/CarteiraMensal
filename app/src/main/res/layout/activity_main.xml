@@ -10,9 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="-34dp"
-        tools:layout_editor_absoluteY="0dp">
+        android:orientation="vertical">
 
         <!--Título-->
         <TextView
@@ -21,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="100dp"
             android:text="Mês/Ano"
             android:textSize="45dp" />
 
@@ -30,17 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="80dp"
             android:orientation="horizontal">
-
-            <!--Primeiro botão: cadastrar saídas-->
-            <ImageButton
-                android:id="@+id/btnSaida"
-                android:layout_width="65dp"
-                android:layout_height="65dp"
-                android:layout_gravity="center"
-                android:layout_marginRight="15dp"
-                android:background="@mipmap/minus" />
 
             <!--Terceiro LinearLayout: agrupamento2-->
             <LinearLayout
@@ -121,23 +109,39 @@
 
             </LinearLayout>
 
-            <!--Segundo botão: cadastrar entradas-->
+        </LinearLayout>
+
+        <!--Sétimo LinearLayout: IconButtons-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/btnSaida"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_gravity="center"
+                android:layout_marginRight="45dp"
+                android:background="@mipmap/minus" />
+
             <ImageButton
                 android:id="@+id/btnEntrada"
                 android:layout_width="65dp"
                 android:layout_height="65dp"
                 android:layout_gravity="center"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="45dp"
                 android:background="@mipmap/plus" />
-
         </LinearLayout>
 
-        <!--Sétimo LinearLayout: botões-->
+        <!--Oitavo LinearLayout: botões-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="125dp"
+            android:layout_marginTop="70dp"
             android:layout_marginRight="15dp"
             android:orientation="horizontal">
 
