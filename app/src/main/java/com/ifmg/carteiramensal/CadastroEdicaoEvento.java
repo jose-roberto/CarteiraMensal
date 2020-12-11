@@ -6,22 +6,26 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import modelo.Event;
 import tools.dbEvents;
-
+import android.content.Context;
 public class CadastroEdicaoEvento extends AppCompatActivity {
 
     private TextView titulo;
@@ -33,9 +37,9 @@ public class CadastroEdicaoEvento extends AppCompatActivity {
     private Button addFoto;
     private Button cancelarCadastro;
     private Button salvarCadastro;
-
     private DatePickerDialog calendario;
     private Calendar calendarioTemp;
+    private Spinner mesesRepeteSpi;
 
     //0 - cadastro de entrada
     //1 - cadastro de saída
@@ -57,12 +61,26 @@ public class CadastroEdicaoEvento extends AppCompatActivity {
         addFoto = (Button) findViewById(R.id.btnAddFoto);
         cancelarCadastro = (Button) findViewById(R.id.btnCancelarCadastro);
         salvarCadastro = (Button) findViewById(R.id.btnSalvarCadastro);
+        mesesRepeteSpi = (Spinner) findViewById(R.id.spRepeticao);
 
         Intent intencao = getIntent();
         acao = intencao.getIntExtra("acao", -1);
 
         ajustesAcao();
         cadastrarEventos();
+        confSpinners();
+    }
+
+    private void confSpinners(){
+        List<String> meses = new ArrayList<>();
+        //Vamos permitir nessa versão a repetição de apenas 24 meses de um evento
+        for(int i = 1; i <=24; i++){
+            meses.add(i + "");
+        }
+
+        ArrayAdapter<String>listaAdapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, meses);
+
+        mesesRepeteSpi.setAdapter(listaAdapter);
     }
 
     private void cadastrarEventos() {

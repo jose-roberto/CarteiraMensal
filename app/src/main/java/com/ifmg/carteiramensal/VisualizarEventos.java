@@ -10,6 +10,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Date;
+
+import modelo.Event;
+
 public class VisualizarEventos extends AppCompatActivity {
 
     private TextView titulo;
@@ -17,6 +22,9 @@ public class VisualizarEventos extends AppCompatActivity {
     private TextView valorTotal;
     private Button btnCancelar;
     private Button btnNovo;
+
+    private ArrayList<Event> eventos;
+    private ItemListaEvento adapter;
 
     //operacao == 0 -> entrada
     //operacao == 1 -> saida
@@ -38,6 +46,8 @@ public class VisualizarEventos extends AppCompatActivity {
 
         cadastrarEventos();
         ajusteOperacao();
+
+        carregaEventosLista();
     }
 
     private void cadastrarEventos() {
@@ -69,5 +79,16 @@ public class VisualizarEventos extends AppCompatActivity {
             //Erro!
             Toast.makeText(VisualizarEventos.this, "Erro na configuração da intent!", Toast.LENGTH_LONG).show();
         }
+    }
+
+
+    private void carregaEventosLista(){
+        eventos = new ArrayList<>();
+
+        eventos.add(new Event( "Padaria",10.60, new Date(), new Date(), new Date(),null));
+        eventos.add(new Event("Supermercado", 358.70, new Date(), new Date(), new Date(),null));
+
+        adapter = new ItemListaEvento(getApplicationContext(), eventos);
+        lista.setAdapter(adapter);
     }
 }
