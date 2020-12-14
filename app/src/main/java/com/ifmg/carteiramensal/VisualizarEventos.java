@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import modelo.Event;
+import tools.dbEvents;
 
 public class VisualizarEventos extends AppCompatActivity {
 
@@ -60,12 +61,18 @@ public class VisualizarEventos extends AppCompatActivity {
                     //Indicar qual operação executar.
                     if(operacao == 0) {
                         trocaAct.putExtra("acao", 0);
+                        startActivityForResult(trocaAct, 0);
                     } else {
                         trocaAct.putExtra("acao", 1);
+                        startActivityForResult(trocaAct, 1);
                     }
-
-                    startActivity(trocaAct);
                 }
+            }
+        });
+        btnCancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }
@@ -85,10 +92,28 @@ public class VisualizarEventos extends AppCompatActivity {
     private void carregaEventosLista(){
         eventos = new ArrayList<>();
 
-        eventos.add(new Event( "Padaria",10.60, new Date(), new Date(), new Date(),null));
-        eventos.add(new Event("Supermercado", 358.70, new Date(), new Date(), new Date(),null));
+       // eventos.add(new Event( "Padaria",10.60, new Date(), new Date(), new Date(),null));
+       // eventos.add(new Event("Supermercado", 358.70, new Date(), new Date(), new Date(),null));
+        dbEvents  db = new dbEvents(VisualizarEventos.this);
+        eventos = db.search(operacao, MainActivity.dataApp);
 
         adapter = new ItemListaEvento(getApplicationContext(), eventos);
         lista.setAdapter(adapter);
+
+        //agora somamos todos os valores para apresentar o total
+        double total = 0;
+        for(int i = 0; i<eventos.size(); i++){
+            total += eventos.get(i).getValor();
+        }
+
+        valorTotal.setText(String.format("%.2f",total));
     }
+    protected void onActivityResult(int codigoRequest, int codigoResultado, Intent data) {
+
+        super.onActivityResult(codigoRequest, codigoResultado, data);
+
+        carregaEventosLista();
+    }
+
+
 }

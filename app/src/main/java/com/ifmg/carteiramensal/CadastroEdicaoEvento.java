@@ -81,6 +81,7 @@ public class CadastroEdicaoEvento extends AppCompatActivity {
         ArrayAdapter<String>listaAdapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, meses);
 
         mesesRepeteSpi.setAdapter(listaAdapter);
+        mesesRepeteSpi.setEnabled(false);
     }
 
     private void cadastrarEventos() {
@@ -107,6 +108,26 @@ public class CadastroEdicaoEvento extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 cadastrarNovoEvento();
+            }
+        });
+
+        //tratando a repeticao do evento
+        cbRepete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(cbRepete.isChecked()){
+                    mesesRepeteSpi.setEnabled(true);
+                }
+                else{
+                    mesesRepeteSpi.setEnabled(false);
+                }
+            }
+        });
+        cancelarCadastro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //termina a execução
+                finish();
             }
         });
     }
@@ -144,11 +165,11 @@ public class CadastroEdicaoEvento extends AppCompatActivity {
             valor *= -1;
         }
 
-        SimpleDateFormat formatador = new SimpleDateFormat("dd/M/yyyy");
-        String strData = txtData.getText().toString();
+        //SimpleDateFormat formatador = new SimpleDateFormat("dd/M/yyyy");
+       // String strData = txtData.getText().toString();
 
-        try {
-            Date dataOcorreu = formatador.parse(strData);
+       // try {
+            Date dataOcorreu = calendarioTemp.getTime();
 
             //Nova calendário para calcular a data limite.
             Calendar dataLimite = Calendar.getInstance();
@@ -156,6 +177,9 @@ public class CadastroEdicaoEvento extends AppCompatActivity {
 
             //Verifica se o evento irá repetir por mais alguns meses.
             if (cbRepete.isChecked()) {
+               String mesStr = (String)mesesRepeteSpi.getSelectedItem();
+
+               dataLimite.add(Calendar.MONTH, Integer.parseInt(mesStr));
             }
 
             //Setando o limite para o último dia do mês.
@@ -169,7 +193,7 @@ public class CadastroEdicaoEvento extends AppCompatActivity {
             Toast.makeText(CadastroEdicaoEvento.this, "Cadastro feito com sucesso!", Toast.LENGTH_LONG).show();
 
             finish();
-        } catch (ParseException ex) {
+        //} catch (ParseException ex) {
             System.err.println("Erro na formatação da data!");
         }
     }
