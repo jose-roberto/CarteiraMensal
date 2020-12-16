@@ -18,10 +18,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
             android:text="Título"
-            android:textSize="32dp" />
+            android:textSize="45dp" />
 
         <!--Lista de eventos-->
         <ListView
@@ -33,13 +33,13 @@
             android:layout_marginBottom="15dp"
             android:layout_weight="1"
             android:padding="10dp"
-            android:background="@drawable/bordalista"/>
+            android:background="@drawable/borda_lista"/>
 
         <!--Segundo LinearLayout: agrupamento de textviews-->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="16dp"
             android:layout_marginBottom="15dp"
             android:orientation="horizontal">
 

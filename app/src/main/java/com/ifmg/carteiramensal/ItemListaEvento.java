@@ -15,82 +15,79 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import modelo.Event;
-//classe que define o comportamento e informações de cada um dos itens da lista de eventos
-public class ItemListaEvento extends ArrayAdapter<Event>{
 
-    private Context contextoPai;
+//Define o comportamento e as informações de cada um dos itens de eventos
+public class ItemListaEvento extends ArrayAdapter<Event> {
+
+    private Context contexto;
     private ArrayList<Event> eventos;
 
-    private static class ViewHolder{
-        private TextView nomeTxt;
-        private TextView valorTxt;
-        private TextView dataTxt;
-        private TextView repeteTxt;
-        private TextView fotoTxt;
+    private static class ViewHolder {
+        private TextView txtNome;
+        private TextView txtValor;
+        private TextView txtData;
+        private TextView txtRepeticao;
+        private TextView txtFoto;
     }
 
-    public ItemListaEvento(Context contexto, ArrayList<Event> dados){
-        super(contexto, R.layout.item_lista_eventos, dados);
+    public ItemListaEvento(Context contexto, ArrayList<Event> dados) {
+        super(contexto, R.layout.item_lista_evento, dados);
 
-        this.contextoPai = contexto;
+        this.contexto = contexto;
         this.eventos = dados;
     }
+
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-       // return super.getView(position, convertView, parent);
-        Event eventoAtual= eventos.get(position);
-        ViewHolder novaView;
+    public View getView(int indice, @Nullable View convertView, @NonNull ViewGroup parent) {
+        //return super.getView(indice, convertView, parent);
 
+        Event eventoAtual = eventos.get(indice);
+        ViewHolder novaView;
         final View resultado;
 
-        //1 é quando a lista está sendo montada pela primeira vez
-        if(convertView == null){
+        if (convertView == null) {
+            //1º caso é quando a lista está sendo montada pela primeira vez.
             novaView = new ViewHolder();
 
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.item_lista_eventos, parent,false);
+            convertView = inflater.inflate(R.layout.item_lista_evento, parent, false);
 
-            //linkando com os componentes do XML
-            novaView.dataTxt = (TextView) convertView.findViewById(R.id.dataItem);
-            novaView.fotoTxt = (TextView) convertView.findViewById(R.id.fotoItem);
-            novaView.nomeTxt = (TextView) convertView.findViewById(R.id.nomeItem);
-            novaView.repeteTxt = (TextView) convertView.findViewById(R.id.repeteItem);
-            novaView.valorTxt = (TextView) convertView.findViewById(R.id.valorItem);
+            //Link entre elementos java e xml.
+            novaView.txtNome = (TextView) convertView.findViewById(R.id.txtNomeItem);
+            novaView.txtValor = (TextView) convertView.findViewById(R.id.txtValorItem);
+            novaView.txtData = (TextView) convertView.findViewById(R.id.txtDataItem);
+            novaView.txtRepeticao = (TextView) convertView.findViewById(R.id.txtRepeticaoItem);
+            novaView.txtFoto = (TextView) convertView.findViewById(R.id.txtFotoItem);
 
             resultado = convertView;
             convertView.setTag(novaView);
-        }
-        //2 item modificado
-        else{
+        } else {
+            //2º caso é quando algum item existente foi modificado.
             novaView = (ViewHolder) convertView.getTag();
             resultado = convertView;
         }
-        //vamos setar os valores de cada
-        novaView.nomeTxt.setText(eventoAtual.getNome());
-        novaView.valorTxt.setText(eventoAtual.getValor()+"");
-        novaView.fotoTxt.setText(eventoAtual.getCaminhoFoto()==null ? "Não" : "Sim");
+
+        //Definindo os valores de cada cmapo.
+        novaView.txtNome.setText(eventoAtual.getNome());
+        novaView.txtValor.setText(eventoAtual.getValor() + "");
         SimpleDateFormat formataData = new SimpleDateFormat("dd/MM/yyyy");
-        novaView.dataTxt.setText(formataData.format(eventoAtual.getDataOcorreu()));
+        novaView.txtData.setText(formataData.format(eventoAtual.getDataOcorreu()));
+        novaView.txtFoto.setText(eventoAtual.getCaminhoFoto() == null ? "Não" : "Sim");
 
-        //verificando se o evento repete
-        Calendar data1 = Calendar.getInstance();
-        data1.setTime(eventoAtual.getDataOcorreu());
+        //Verificando se o evento irá repetir.
+        Calendar dataOcorreu = Calendar.getInstance();
+        dataOcorreu.setTime(eventoAtual.getDataOcorreu());
 
-        Calendar data2 = Calendar.getInstance();
-        data2.setTime(eventoAtual.getDataOcorreu());
+        Calendar dataLimite = Calendar.getInstance();
+        dataLimite.setTime(eventoAtual.getDataLimite());
 
-
-        if(data1.get(Calendar.MONTH)!= data2.get(Calendar.MONTH)){
-            novaView.repeteTxt.setText("Sim");
-        }
-        else{
-            novaView.repeteTxt.setText("Não");
+        if (dataOcorreu.get(Calendar.MONTH) != dataLimite.get(Calendar.MONTH)) {
+            novaView.txtRepeticao.setText("Sim");
+        } else {
+            novaView.txtRepeticao.setText("Não");
         }
 
         return resultado;
-
-
     }
-
 }

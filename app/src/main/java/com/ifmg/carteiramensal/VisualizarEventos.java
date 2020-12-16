@@ -11,10 +11,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import modelo.Event;
-import tools.dbEvents;
+import tools.DB_Events;
 
 public class VisualizarEventos extends AppCompatActivity {
 
@@ -47,7 +46,6 @@ public class VisualizarEventos extends AppCompatActivity {
 
         cadastrarEventos();
         ajusteOperacao();
-
         carregaEventosLista();
     }
 
@@ -62,6 +60,7 @@ public class VisualizarEventos extends AppCompatActivity {
                     if(operacao == 0) {
                         trocaAct.putExtra("acao", 0);
                         startActivityForResult(trocaAct, 0);
+
                     } else {
                         trocaAct.putExtra("acao", 1);
                         startActivityForResult(trocaAct, 1);
@@ -69,6 +68,7 @@ public class VisualizarEventos extends AppCompatActivity {
                 }
             }
         });
+
         btnCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,32 +88,30 @@ public class VisualizarEventos extends AppCompatActivity {
         }
     }
 
-
-    private void carregaEventosLista(){
+    private void carregaEventosLista() {
         eventos = new ArrayList<>();
-
-       // eventos.add(new Event( "Padaria",10.60, new Date(), new Date(), new Date(),null));
-       // eventos.add(new Event("Supermercado", 358.70, new Date(), new Date(), new Date(),null));
-        dbEvents  db = new dbEvents(VisualizarEventos.this);
+        /* eventos.add(new Event("Padaria", 10.60, new Date(), new Date(), new Date(), null));
+        eventos.add(new Event("Supermercado", 358.70, new Date(), new Date(), new Date(), null));*/
+        //Busca do eventos no banco de dados
+        DB_Events db = new DB_Events(this);
         eventos = db.search(operacao, MainActivity.dataApp);
 
         adapter = new ItemListaEvento(getApplicationContext(), eventos);
         lista.setAdapter(adapter);
 
-        //agora somamos todos os valores para apresentar o total
-        double total = 0;
-        for(int i = 0; i<eventos.size(); i++){
+        //Gerando o valor total.
+        double total = 0.00;
+
+        for(int i = 0; i < eventos.size(); i++) {
             total += eventos.get(i).getValor();
         }
 
-        valorTotal.setText(String.format("%.2f",total));
+        valorTotal.setText(String.format("%.2f", total));
     }
-    protected void onActivityResult(int codigoRequest, int codigoResultado, Intent data) {
 
+    protected void onActivityResult(int codigoRequest, int codigoResultado, Intent data) {
         super.onActivityResult(codigoRequest, codigoResultado, data);
 
         carregaEventosLista();
     }
-
-
 }

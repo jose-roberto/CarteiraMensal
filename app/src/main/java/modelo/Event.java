@@ -3,36 +3,36 @@ package modelo;
 import java.util.Date;
 
 public class Event {
-    private long id;
+    private int id;
     private String nome;
     private double valor;
     private Date dataCadastro, dataLimite, dataOcorreu;
     private String caminhoFoto;
 
-    public Event(long id, String nome, double valor, Date dataCadastro, Date dataLimite, Date dataOcorreu, String caminhoFoto) {
+    public Event(int id, String nome, double valor, String caminhoFoto, Date dataOcorreu, Date dataCadastro, Date dataLimite) {
         this.id = id;
         this.nome = nome;
         this.valor = valor;
+        this.caminhoFoto = caminhoFoto;
         this.dataCadastro = dataCadastro;
         this.dataLimite = dataLimite;
         this.dataOcorreu = dataOcorreu;
-        this.caminhoFoto = caminhoFoto;
     }
 
-    public Event(String nome, double valor, Date dataCadastro, Date dataLimite, Date dataOcorreu, String caminhoFoto) {
+    public Event(String nome, double valor, String caminhoFoto, Date dataOcorreu, Date dataCadastro, Date dataLimite) {
         this.nome = nome;
         this.valor = valor;
+        this.caminhoFoto = caminhoFoto;
         this.dataCadastro = dataCadastro;
         this.dataLimite = dataLimite;
         this.dataOcorreu = dataOcorreu;
-        this.caminhoFoto = caminhoFoto;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

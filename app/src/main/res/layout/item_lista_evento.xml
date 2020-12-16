@@ -1,133 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
-    //delimita o espaço do item
+    <!--Primeiro LinearLayout: delimita o espaço do item-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="4dp"
-        android:background="@drawable/apenasborda"
-        android:layout_marginBottom="5dp">
+        android:layout_marginBottom="5dp"
+        android:padding="5dp"
+        android:background="@drawable/borda_item">
 
-        //Nome do evento
+        <!--Segundo LinearLayout: nome do evento-->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_gravity="center"
-            android:layout_marginBottom="5dp">
-
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nome: "
-                android:textSize="18sp"
+                android:text="Nome do evento: "
                 android:textColor="@color/black"
-                android:textStyle="bold"/>
+                android:textSize="18dp"
+                android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/nomeItem"
+                android:id="@+id/txtNomeItem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nome evento ..."
-                android:textSize="18sp"
-                android:textColor="@color/black"/>
+                android:text="nome do evento"
+                android:textColor="@color/black"
+                android:textSize="18dp" />
 
         </LinearLayout>
 
-        //valor e data do evento
+        <!--Terceiro LinearLayout: valor e data do evento-->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_gravity="center"
-            android:layout_marginBottom="5dp">
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Valor: R$"
-                android:textSize="18sp"
                 android:textColor="@color/black"
-                android:textStyle="bold"/>
-
+                android:textSize="18dp"
+                android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/valorItem"
+                android:id="@+id/txtValorItem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0,00"
-                android:textSize="18sp"
                 android:layout_marginRight="20dp"
+                android:text="0,00"
                 android:textColor="@color/black"
-                />
+                android:textSize="18dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Data: "
-                android:textSize="18sp"
                 android:textColor="@color/black"
-                android:textStyle="bold"/>
-
+                android:textSize="18dp"
+                android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/dataItem"
+                android:id="@+id/txtDataItem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="00/00/0000"
-                android:textSize="18sp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textSize="18dp" />
 
         </LinearLayout>
 
-        //Foto e repetição
+        <!--Quarto LinearLayout: foto e indicação de repetição do evento-->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center">
+            android:layout_gravity="center"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Foto: "
-                android:textSize="18sp"
+                android:text="Há alguma foto? "
                 android:textColor="@color/black"
-                android:textStyle="bold"/>
-
+                android:textSize="18dp"
+                android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/fotoItem"
+                android:id="@+id/txtFotoItem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Não"
-                android:textSize="18sp"
                 android:layout_marginRight="20dp"
-                android:textColor="@color/black"/>
+                android:text="Não"
+                android:textColor="@color/black"
+                android:textSize="18dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Repete: "
-                android:textSize="18sp"
+                android:text="Repete? "
                 android:textColor="@color/black"
-                android:textStyle="bold"/>
-
+                android:textSize="18dp"
+                android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/repeteItem"
+                android:id="@+id/txtRepeticaoItem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Não"
-                android:textSize="18sp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textSize="18dp" />
 
         </LinearLayout>
 
