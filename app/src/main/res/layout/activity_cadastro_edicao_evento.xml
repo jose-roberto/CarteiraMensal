@@ -146,7 +146,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/btnCancelarCadastro"
+                    android:id="@+id/btnCancelar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="5dp"
@@ -154,7 +154,7 @@
                     android:text="Cancelar" />
 
                 <Button
-                    android:id="@+id/btnSalvarCadastro"
+                    android:id="@+id/btnSalvar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"

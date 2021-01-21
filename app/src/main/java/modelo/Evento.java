@@ -2,14 +2,14 @@ package modelo;
 
 import java.util.Date;
 
-public class Event {
+public class Evento {
     private int id;
     private String nome;
     private double valor;
     private Date dataCadastro, dataLimite, dataOcorreu;
     private String caminhoFoto;
 
-    public Event(int id, String nome, double valor, String caminhoFoto, Date dataOcorreu, Date dataCadastro, Date dataLimite) {
+    public Evento(int id, String nome, double valor, String caminhoFoto, Date dataOcorreu, Date dataCadastro, Date dataLimite) {
         this.id = id;
         this.nome = nome;
         this.valor = valor;
@@ -19,7 +19,7 @@ public class Event {
         this.dataOcorreu = dataOcorreu;
     }
 
-    public Event(String nome, double valor, String caminhoFoto, Date dataOcorreu, Date dataCadastro, Date dataLimite) {
+    public Evento(String nome, double valor, String caminhoFoto, Date dataOcorreu, Date dataCadastro, Date dataLimite) {
         this.nome = nome;
         this.valor = valor;
         this.caminhoFoto = caminhoFoto;

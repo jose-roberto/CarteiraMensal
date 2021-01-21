@@ -14,13 +14,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import modelo.Event;
+import modelo.Evento;
 
 //Define o comportamento e as informações de cada um dos itens de eventos
-public class ItemListaEvento extends ArrayAdapter<Event> {
+public class ItemListaEvento extends ArrayAdapter<Evento> {
 
     private Context contexto;
-    private ArrayList<Event> eventos;
+    private ArrayList<Evento> eventos;
 
     private static class ViewHolder {
         private TextView txtNome;
@@ -30,7 +30,7 @@ public class ItemListaEvento extends ArrayAdapter<Event> {
         private TextView txtFoto;
     }
 
-    public ItemListaEvento(Context contexto, ArrayList<Event> dados) {
+    public ItemListaEvento(Context contexto, ArrayList<Evento> dados) {
         super(contexto, R.layout.item_lista_evento, dados);
 
         this.contexto = contexto;
@@ -42,7 +42,7 @@ public class ItemListaEvento extends ArrayAdapter<Event> {
     public View getView(int indice, @Nullable View convertView, @NonNull ViewGroup parent) {
         //return super.getView(indice, convertView, parent);
 
-        Event eventoAtual = eventos.get(indice);
+        Evento eventoAtual = eventos.get(indice);
         ViewHolder novaView;
         final View resultado;
 

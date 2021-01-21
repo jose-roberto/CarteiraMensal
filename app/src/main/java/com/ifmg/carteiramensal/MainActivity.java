@@ -1,6 +1,5 @@
 package com.ifmg.carteiramensal;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -13,8 +12,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import modelo.Event;
-import tools.DB_Events;
+import modelo.Evento;
+import tools.EventosDB;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -145,10 +144,10 @@ public class MainActivity extends AppCompatActivity {
     private void atualizaValores() {
 
         //Busca todas as entradas e saídas cadastradas no banco.
-        DB_Events db = new DB_Events(this);
+        EventosDB db = new EventosDB(this);
 
-        ArrayList<Event> listaEntradas = db.search(0, dataApp);
-        ArrayList<Event> listaSaidas = db.search(1, dataApp);
+        ArrayList<Evento> listaEntradas = db.search(0, dataApp);
+        ArrayList<Evento> listaSaidas = db.search(1, dataApp);
 
         //Soma o valor total de entradas, o valor total de saídas e o valor do saldo.
         double totalEntradas = 0.00;

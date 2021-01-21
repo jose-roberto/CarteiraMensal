@@ -11,13 +11,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import modelo.Event;
+import modelo.Evento;
 
-public class DB_Events extends SQLiteOpenHelper {
+public class EventosDB extends SQLiteOpenHelper {
 
     private Context context;
 
-    public DB_Events(Context context) {
+    public EventosDB(Context context) {
         super(context, "evento", null, 1);
         this.context = context;
     }
@@ -29,7 +29,7 @@ public class DB_Events extends SQLiteOpenHelper {
         db.execSQL(create);
     }
 
-    public void insert(Event novoEvento) {
+    public void insert(Evento novoEvento) {
         try (SQLiteDatabase db = this.getWritableDatabase();) {
             /*String sql = "INSERT into evento(nome, valor) VALUES ('teste', 89)";
             db.execSQL(sql);*/
@@ -49,12 +49,58 @@ public class DB_Events extends SQLiteOpenHelper {
         }
     }
 
-    public void update() {
+    public void updateEvento(Evento eventoAtualizado) {
+        try (SQLiteDatabase db = this.getWritableDatabase()) {
+            ContentValues valores = new ContentValues();
 
+            valores.put("nome", eventoAtualizado.getNome());
+            valores.put("valor", eventoAtualizado.getValor());
+            valores.put("imagem", eventoAtualizado.getCaminhoFoto());
+            valores.put("dataOcorreu", eventoAtualizado.getDataOcorreu().getTime());
+            valores.put("validadeData", eventoAtualizado.getDataLimite().getTime());
+
+            db.update("evento", valores, "id = ?", new String[]{eventoAtualizado.getId() + ""});
+
+        } catch (SQLiteException ex) {
+            System.err.println("Erro ao atualizar o evento!");
+            ex.printStackTrace();
+        }
     }
 
-    public ArrayList<Event> search(int operacao, Calendar data) {
-        ArrayList<Event> resultado = new ArrayList<>();
+    public Evento buscaEventoId(int idEvento) {
+        String sql = "SELECT * FROM evento WHERE id = " + idEvento;
+
+        Evento resultado = null;
+
+        try (SQLiteDatabase db = this.getWritableDatabase()) {
+            //Executando a sql
+            Cursor tupla = db.rawQuery(sql, null);
+
+            //Extraindo as informações do evento
+            if (tupla.moveToFirst()) {
+                String nome = tupla.getString(1);
+                double valor = tupla.getDouble(2);
+                if (valor < 0) {
+                    valor *= -1;
+                }
+                String imagem = tupla.getString(3);
+                Date dataOcorreu = new Date(tupla.getLong(4));
+                Date dataCadastro = new Date(tupla.getLong(5));
+                Date validadeData = new Date(tupla.getLong(6));
+
+                //Instanciação do objeto
+                resultado = new Evento(idEvento, nome, valor, imagem, dataOcorreu, dataCadastro, validadeData);
+            }
+        } catch (SQLiteException ex) {
+            System.err.println("Erro ao selecionar evento pelo id!");
+            ex.printStackTrace();
+        }
+
+        return resultado;
+    }
+
+    public ArrayList<Evento> search(int operacao, Calendar data) {
+        ArrayList<Evento> resultado = new ArrayList<>();
 
         Calendar primeiro_dia = Calendar.getInstance();
         primeiro_dia.setTime(data.getTime());
@@ -100,7 +146,7 @@ public class DB_Events extends SQLiteOpenHelper {
                     Date dataCadastro = new Date(tuplas.getLong(5));
                     Date validadeData = new Date(tuplas.getLong(6));
 
-                    Event temp = new Event(id, nome, valor, imagem, dataOcorreu, dataCadastro, validadeData);
+                    Evento temp = new Evento(id, nome, valor, imagem, dataOcorreu, dataCadastro, validadeData);
 
                     resultado.add(temp);
                 } while (tuplas.moveToNext());

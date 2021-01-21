@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -12,8 +13,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import modelo.Event;
-import tools.DB_Events;
+import modelo.Evento;
+import tools.EventosDB;
 
 public class VisualizarEventos extends AppCompatActivity {
 
@@ -23,7 +24,7 @@ public class VisualizarEventos extends AppCompatActivity {
     private Button btnCancelar;
     private Button btnNovo;
 
-    private ArrayList<Event> eventos;
+    private ArrayList<Evento> eventos;
     private ItemListaEvento adapter;
 
     //operacao == 0 -> entrada
@@ -53,11 +54,11 @@ public class VisualizarEventos extends AppCompatActivity {
         btnNovo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(operacao != - 1) {
+                if (operacao != -1) {
                     Intent trocaAct = new Intent(VisualizarEventos.this, CadastroEdicaoEvento.class);
 
                     //Indicar qual operação executar.
-                    if(operacao == 0) {
+                    if (operacao == 0) {
                         trocaAct.putExtra("acao", 0);
                         startActivityForResult(trocaAct, 0);
 
@@ -78,9 +79,9 @@ public class VisualizarEventos extends AppCompatActivity {
     }
 
     private void ajusteOperacao() {
-        if(operacao == 0) {
+        if (operacao == 0) {
             titulo.setText("Entradas");
-        } else if(operacao == 1) {
+        } else if (operacao == 1) {
             titulo.setText("Saídas");
         } else {
             //Erro!
@@ -90,19 +91,39 @@ public class VisualizarEventos extends AppCompatActivity {
 
     private void carregaEventosLista() {
         eventos = new ArrayList<>();
-        /* eventos.add(new Event("Padaria", 10.60, new Date(), new Date(), new Date(), null));
-        eventos.add(new Event("Supermercado", 358.70, new Date(), new Date(), new Date(), null));*/
+        /* eventos.add(new Evento("Padaria", 10.60, new Date(), new Date(), new Date(), null));
+        eventos.add(new Evento("Supermercado", 358.70, new Date(), new Date(), new Date(), null));*/
         //Busca do eventos no banco de dados
-        DB_Events db = new DB_Events(this);
+        EventosDB db = new EventosDB(this);
         eventos = db.search(operacao, MainActivity.dataApp);
 
         adapter = new ItemListaEvento(getApplicationContext(), eventos);
         lista.setAdapter(adapter);
 
+        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int indice, long id) {
+                Evento eventoSelecionado = eventos.get(indice);
+
+                Intent novoFluxo = new Intent(VisualizarEventos.this, CadastroEdicaoEvento.class);
+
+                //Selecionando qual o tipo de evento será alterado.
+                if (operacao == 0) {
+                    novoFluxo.putExtra("acao", 2);
+                } else {
+                    novoFluxo.putExtra("acao", 3);
+                }
+
+                novoFluxo.putExtra("id", eventoSelecionado.getId() + "");
+
+                startActivityForResult(novoFluxo, operacao);
+            }
+        });
+
         //Gerando o valor total.
         double total = 0.00;
 
-        for(int i = 0; i < eventos.size(); i++) {
+        for (int i = 0; i < eventos.size(); i++) {
             total += eventos.get(i).getValor();
         }
 
